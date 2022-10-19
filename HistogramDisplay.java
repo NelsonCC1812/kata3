@@ -12,8 +12,11 @@ import java.awt.Dimension;
 
 public class HistogramDisplay extends ApplicationFrame {
 
-    public HistogramDisplay(String title) {
+    private final Histogram<String> histogram;
+
+    public HistogramDisplay(Histogram histogram, String title) {
         super(title);
+        this.histogram = histogram;
         this.setContentPane(createPanel());
         this.pack();
     }
@@ -38,9 +41,9 @@ public class HistogramDisplay extends ApplicationFrame {
     private DefaultCategoryDataset createDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        dataset.addValue(6, "", "ulpgc.es");
-        dataset.addValue(2, "", "dis.ulpgc.es");
-        dataset.addValue(5, "", "gmail.com");
+        for (String key : this.histogram.keySet()) {
+            dataset.addValue(this.histogram.get(key), "", key);
+        }
 
         return dataset;
     }
